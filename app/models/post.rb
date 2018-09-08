@@ -11,13 +11,13 @@ class Post < ActiveRecord::Base
 
   has_many :comments
   has_many :users, through: :comments
-  accepts_nested_attributes_for :categories
+  # accepts_nested_attributes_for :categories #built our own categories_attributes= writer method below
 
 # creates
   def categories_attributes=(category_attributes)
     #raise category_attributes.inspect
     #{"0"=>{"name"=>"new category 1"}, "1"=>{"name"=>"new category 2"} }
-    categories_attributes.each do |i, category_attributes|
+    category_attributes.each do |i, category_attributes|
       # create a new category if this post doesn't already have this category
       #find or create the category regardless of whether this post has it...
 
@@ -29,8 +29,10 @@ class Post < ActiveRecord::Base
         if !self.categories.include?(category)
         # inefficient, the below code will return all categories
         # self.categories << category
-        self.post_categories.build(:category => category)
+          self.post_categories.build(:category => category)
+        end
       end
+    end
       # I need to create a category that is already assoicated with this post
       # and I need to make sure that this category already doesn't exist by name.
 

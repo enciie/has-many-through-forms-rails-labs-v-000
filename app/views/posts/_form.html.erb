@@ -38,18 +38,18 @@
     <% end %> -->
 
     <%= f.label "Create a New Category" %>
-    <%= f.fields_for :categories, post.categories.build do |categories_fields| %>
+    <!-- <%= f.fields_for :categories, post.categories.build do |categories_fields| %>
       <%= categories_fields.text_field :name %>
-    <% end %>
+    <% end %> -->
     <%= f.fields_for :categories do |category_builder| %>
       <%= category_builder.text_field :name %>
     <% end %>
     <!--
     How does fields_for know if there's any changes to the model class
       1. f is attached to the post
-      2. the fields_for method looks to see if the obhect (post) attached to f
+      2. the fields_for method looks to see if the object (post) attached to f
         responds to a method called categories_attributes=
-      3a. If the underlying object (post) does not respond to that method,
+      3a. If the underlying object (post) does respond to that method,
         fields_for knows your building a nested form.
       3b. If the underlying object does not respond to that method, fields_for
         assumes something custom.
